@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block card %}
+    {% for datum in data %}
+        <div class="col-9">
+            <div class="card shadow-sm my-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ datum.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted small py-2">{{ datum.datetime_modified }}</h6>
+                    <p class="card-text py-3">
+                        {{ datum.text }}
+                    </p>
+                    <div class="btn btn-sm btn-outline-success "><a href="{% url 'post_view' datum.id %}">Read More</a>
+                    </div>
+                    <div class="btn btn-sm btn-outline-danger"><a href="{% url 'post_edit' datum.id %}">Edit Post</a>
+                    </div>
+                    <form action="{% url 'post_delete' datum.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                    </form>
+                    {#                    <div class="btn btn-sm btn-outline-warning"><a href="{% url 'post_delete' datum.id %}">Delete Post</a></div>#}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock card %}
